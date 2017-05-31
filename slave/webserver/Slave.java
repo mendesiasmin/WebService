@@ -7,24 +7,26 @@ import javax.xml.ws.BindingProvider;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
+import webserver.WebServer;
+import webserver.Task;
+import webserver.WebServerImplementService;
 
 class Slave {
 
 	public static void main(String args[]) throws Exception {
 
-		URL url = new URL("http://127.0.0.1:3000/webserver?wsdl");
-		QName qname = new QName("http://webserver/","WebServerImplementService");
-		Service ws = Service.create(url, qname);
-		WebServer webserver = ws.getPort(WebServer.class);
+		WebServerImplementService sib = new WebServerImplementService();
+		WebServer webserver = sib.getWebServerImplementPort();
 
-    Task task;
+		Task task;
+    TaskSlave task_slave = new TaskSlave();
     int key_task = 0;
 
     while(key_task > -1) {
 
 			// Search Task
       task = webserver.readPair(key_task);
-			if (task.row == null)
+			if (task.getRow() == null)
 			{
 				System.out.println("Not found key task");
 				//Sleep for a random time
@@ -32,7 +34,7 @@ class Slave {
 				Thread.sleep(time.nextInt(4000));
 			} else {
 	        try {
-	          int result = task.execute();
+	          int result = task_slave.execute(task.getRow().getRow(), task.getColumn().getColumn());
 						System.out.println("Key Task: " + key_task + " Soluction: " + result);
 	          webserver.sendTaskResult(key_task, result);
 	          webserver.pairOut(key_task);
