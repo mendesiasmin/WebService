@@ -11,20 +11,24 @@ import java.util.ArrayList;
 public class WebServerImplement implements WebServer {
 
 	ArrayList<Pair> queue;
+	ArrayList<ResultTask> results;
+	Task invalid_task;
 
 	public WebServerImplement() {
+		System.out.println("Initialize server...");
 		queue = new ArrayList<Pair>();
+		results = new ArrayList<ResultTask>();
+		invalid_task = new Task(null, null);
 	}
 
 	public void pairIn(int key, Task task) {
-		System.out.println("Entrou");
-		System.out.println("R: " + task.row.size());
-		System.out.println("C: " + task.column.size());
+		System.out.println("Add pair " + key);
 		Pair pair = new Pair(key, task);
 		queue.add(pair);
 	}
 
 	public void pairOut(int key) {
+		System.out.println("Remove pair " + key);
 		int index = 0;
 		for(Pair pair : queue){
 			if(pair.key == key){
@@ -41,7 +45,7 @@ public class WebServerImplement implements WebServer {
 				return pair.task;
 			}
 		}
-		return null;
+		return invalid_task;
 	}
 
 	public void printQueue() {
@@ -49,5 +53,24 @@ public class WebServerImplement implements WebServer {
 		for(Pair pair : queue){
 				System.out.println(pair.key + ": " + pair.task.row.size() + " " + pair.task.column.size());
 			}
+	}
+
+	public void sendTaskResult(int key, int result) {
+		ResultTask task_result = new ResultTask(key, result);
+		results.add(task_result);
+	}
+
+	public int getResultTask(int key) {
+		int index = 0;
+		int value;
+		for(ResultTask result : results){
+			if(result.key == key){
+				value = result.result;
+				results.remove(index);
+				return value;
+			}
+			index++;
+		}
+		return -1;
 	}
 }

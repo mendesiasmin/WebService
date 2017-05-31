@@ -16,6 +16,8 @@ public interface WebServer {
 	@WebMethod void pairIn(int key, Task task);
 	@WebMethod void pairOut(int key);
 	@WebMethod Task readPair(int key);
+	@WebMethod void sendTaskResult(int key, int result);
+	@WebMethod int getResultTask(int key);
 	@WebMethod void printQueue();
 
 }
