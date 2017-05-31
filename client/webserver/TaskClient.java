@@ -5,16 +5,9 @@ import javax.xml.bind.annotation.*;
 import webserver.Task;
 import webserver.Task.*;
 
-// @XmlRootElement
-// @XmlAccessorType(XmlAccessType.FIELD)
 public class TaskClient {
 
-  // @XmlElementWrapper
-  // @XmlElement(name="row")
   public List<Integer> row;
-
-  // @XmlElementWrapper
-  // @XmlElement(name="column")
   public List<Integer> column;
 
   public TaskClient(){}

@@ -14,18 +14,12 @@ import webserver.WebServerImplementService;
 class Client {
 
 	public static void main(String args[]) throws Exception {
-		// URL url = new URL("http://127.0.0.1:3000/webserver?wsdl");
-		// QName qname = new QName("http://webserver/","WebServerImplementService");
-		// Service ws = Service.create(url, qname);
-		// WebServer webserver = ws.getPort(WebServer.class);
 
 		WebServerImplementService sib = new WebServerImplementService();
 		WebServer webserver = sib.getWebServerImplementPort();
 
-		// System.out.println(webserver.getWebServerImplementName());
-
-		Matrix matrix_A = new Matrix("input/matrix_C.txt");
-		Matrix matrix_B = new Matrix("input/matrix_D.txt");
+		Matrix matrix_A = new Matrix("input/matrix_A.txt");
+		Matrix matrix_B = new Matrix("input/matrix_B.txt");
 
 		Matrix transposed_B = matrix_B.transposed();
 		int size = matrix_A.matrix.size();
